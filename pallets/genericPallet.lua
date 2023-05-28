@@ -1,9 +1,11 @@
 GenericPallet = {}
-
-function GenericPallet:new(pallet)
-    local newObj = {}
-    self:init(pallet)
-    return setmetatable(newObj,{__index = self})
+MetaGenericPallet = {
+    __index = GenericPallet
+}
+function GenericPallet.new(pallet)
+    local newObj = setmetatable({},MetaGenericPallet)
+    newObj:init(pallet)
+    return newObj
 end
 
 function GenericPallet:init(pallet)

@@ -1,7 +1,7 @@
 --requires
 require("pallets.genericPallet")
 --defaultPallet.lua
-DefaultPallet = GenericPallet:new(
+DefaultPallet = GenericPallet.new(
     {   
         {86, 199, 80 , 255},
         {64, 181, 58, 255},
