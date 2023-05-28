@@ -17,6 +17,7 @@ end
 
 function love.keypressed(key)
     if key == 'escape' then
+        Game.data:saveOnFile()
         love.event.quit()
     end
 

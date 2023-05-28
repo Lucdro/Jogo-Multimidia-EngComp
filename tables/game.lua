@@ -6,7 +6,7 @@ require("tables.scenes")
 Game = {
     scenes = Scenes,
     data = Data,
-    currentScene = 1
+    currentScene = 2
 }
 
 function Game:recoverData()
@@ -27,7 +27,7 @@ function Game:sceneExists(n)
 end
 
 function Game:setScene(n)
-    if self.sceneExists(n) then
+    if self:sceneExists(n) then
         self.currentScene = n
     else 
         error("Scene don't exists!",1) end
@@ -36,6 +36,9 @@ function Game:update(dt)
     --if not self.loaded then return end
     if self:sceneExists(self.currentScene) then
         self.scenes[self.currentScene]:update(dt)
+        if self.scenes[self.currentScene].switch then
+            self:setScene(self.scenes[self.currentScene].nextScene)
+        end
     else
         self:printError("No scene selected! -- Update")
     end

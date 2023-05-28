@@ -9,6 +9,7 @@ Data = {
 
 function Data:setSettings(settings)
     self.settings = settings
+    Settings.setWindowSize(self.settings.windowSize)
 end
 
 function Data:getSettings()
@@ -27,6 +28,6 @@ function Data:loadFromFile(path)
     local savedData = io.read()
     local data = json.decode(savedData)
     self.record = data.record
-    self.settings = data.settings
+    self:setSettings(data.settings)
     io.close()
 end

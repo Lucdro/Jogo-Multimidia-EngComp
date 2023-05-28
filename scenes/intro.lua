@@ -16,12 +16,18 @@ Intro = {
         SnakeTailEnd.new(100,100,DefaultPallet),
         Ground.new(200,0,DefaultPallet),
         SnakeHead.new(200,100,DefaultPallet),
-    }
+    },
+    time = 5,
+    nextScene = 2,
+    switch = false
 }
 
 function Intro:update(dt)
     --self.objects[1]:setDirection("down")
     self.objects[6]:setPallet(RedPallet)
+    
+    if self.time <= 0 then self.switch = true
+    else self.time = self.time - 1 * dt end
 end
 
 function Intro:draw()
