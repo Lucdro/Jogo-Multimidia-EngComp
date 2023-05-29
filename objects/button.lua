@@ -13,8 +13,8 @@ Button = {
     right = {},
     pallet = {},
     direction = "",
-    textx = 0,
-    texty = 0,
+    textx = 3.5,
+    texty = 4,
 }
 MetaButton = {
     __index = Button
@@ -40,8 +40,8 @@ function Button:draw()
     self.right:draw()
     
     love.graphics.setColor(self.pallet[4].red, self.pallet[4].green, self.pallet[4].blue, self.pallet[4].alpha)
-    love.graphics.setNewFont(20)
-    love.graphics.print(self.text,self.textx,self.texty)
+    love.graphics.setNewFont(Settings.fontsize)
+    love.graphics.print(self.text,self.x + Settings.pixelwidth*self.textx ,self.y + Settings.pixelheight*self.texty)
 end
 
 function Button:setTextPosition(x,y)
@@ -52,7 +52,6 @@ end
 function Button:setPosition(x,y)
     self.x = x
     self.y = y
-    self:setTextPosition(x + 15,y+15)
 end
 
 function Button:setPallet(pallet)

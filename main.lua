@@ -3,8 +3,9 @@
 ]]
 require("pallets.redPallet")
 require("tables.game")
+require("tables.settings")
 Game:recoverData()
-Game:setPallet(RedPallet)
+Settings:setWindowSize({width = 1280, height = 720})
 Game:setScene(2)
 love.graphics.setDefaultFilter('nearest', 'nearest')
 
@@ -19,10 +20,7 @@ function love.resize(w, h)
 end
 
 function love.keypressed(key)
-    if key == 'escape' then
-        Game.data:saveOnFile()
-        love.event.quit()
-    end
+    if key == 'escape' then love.quit() end
 
     love.keyboard.keysPressed[key] = true
 end
@@ -42,3 +40,7 @@ function love.draw()
     Game:draw()
 end
 
+function love.quit()
+    Game.data:saveOnFile()
+    love.event.quit()
+end

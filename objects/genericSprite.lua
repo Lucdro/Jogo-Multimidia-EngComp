@@ -10,7 +10,7 @@ GenericSprite = {
 MetaGenericSprite = {
     __index = GenericSprite
 }
-function GenericSprite:new(path)
+function GenericSprite.new(path)
     local newObj = setmetatable({},MetaGenericSprite)
     newObj:init(path)
     return newObj
@@ -22,7 +22,7 @@ function GenericSprite:init(path)
     self.loaded = true
 end
 
-function GenericSprite.draw(self,rx,ry,pallet,direction)
+function GenericSprite:draw(rx,ry,pallet,direction)
     local pw = Game.data.settings.pixelwidth
     local ph = Game.data.settings.pixelwidth
     if direction == "left" then

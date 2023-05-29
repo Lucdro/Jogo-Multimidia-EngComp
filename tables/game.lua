@@ -1,21 +1,21 @@
 --Requires
 require("tables.data")
-require("scenes.intro")
 require("tables.scenes")
+require("tables.pallets")
 --game.lua
 Game = {
     scenes = Scenes,
     data = Data,
-    currentScene = 0
+    currentScene = 0,
+    pallets = Pallets,
 }
 
 function Game:recoverData()
-    local path = "data.txt"
-    if FileExists(path) then
-        self.data:loadFromFile(path)
+    if FileExists(Settings.savefile) then
+        self.data:loadFromFile()
     else
         self.data.settings:defaultSettings()
-        self.data:saveOnFile(path)
+        self.data:saveOnFile()
     end
 end
 
@@ -33,8 +33,8 @@ function Game:setScene(n)
         self.scenes[self.currentScene]:load()
     end
 end
+
 function Game:update(dt)
-    --if not self.loaded then return end
     if self:sceneExists(self.currentScene) then
         self.scenes[self.currentScene]:update(dt)
         if self.scenes[self.currentScene].switch then
@@ -42,6 +42,12 @@ function Game:update(dt)
         end
     else
         self:printError("No scene selected! -- Update")
+    end
+
+    if love.keyboard.wasPressed("1") then
+        self:previousPallet()
+    elseif love.keyboard.wasPressed("2") then
+        self:nextPallet()
     end
 end
 function Game:draw()
@@ -59,4 +65,22 @@ end
 
 function Game:setPallet(pallet)
     Settings.selectedPallet = pallet
+end
+
+function Game:previousPallet()
+    if Settings.currentPallet == 1 then
+        Settings.currentPallet = #self.pallets
+    else
+        Settings.currentPallet = Settings.currentPallet - 1
+    end
+    self:setPallet(self.pallets[Settings.currentPallet])
+end
+
+function Game:nextPallet()
+    if Settings.currentPallet == #self.pallets then
+        Settings.currentPallet = 1
+    else
+        Settings.currentPallet = Settings.currentPallet + 1
+    end
+    self:setPallet(self.pallets[Settings.currentPallet])
 end

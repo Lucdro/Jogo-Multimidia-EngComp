@@ -1,31 +1,33 @@
 --requires
+require("tables.data")
 require("objects.button")
 require("objects.ground")
 require("pallets.defaultPallet")
 require("pallets.redPallet")
-
---intro.lua
+require("scenes.genericScene")
+--menu.lua
 Menu = {
-    objects = {},
-    nextScene = 2,
-    switch = false,
-    focus = {},
-    background = {}
+    
 }
+setmetatable(Menu,MetaGenericScene)
 
 function Menu:load()
+    self.switch = false
+    Settings:setScale(12,7)
+    --Settings:setWindowSize({width = 640, height = 360})
     local x = (Settings.windowSize.width/2) - (Settings.pixelwidth * Settings.spritelenght)
-    Menu.objects[1] = Button.new(x,200,Settings.selectedPallet,"Single Player")
-    Menu.objects[2] = Button.new(x,300,Settings.selectedPallet,"MultiPlayer")
-    Menu.objects[3] = Button.new(x,400,Settings.selectedPallet,"Settings")
-    Menu.objects[4] = Button.new(x,500,Settings.selectedPallet,"Sair")
+    local yplus = (Settings.pixelheight * Settings.spritelenght * 1.25)
+    local y = (Settings.windowSize.height - 5*yplus)/2
+    Menu.objects[1] = Button.new(x,y + 0*yplus,Settings.selectedPallet,"Single Player")
+    Menu.objects[2] = Button.new(x,y + 1*yplus,Settings.selectedPallet,"Two Players")
+    Menu.objects[3] = Button.new(x,y + 2*yplus,Settings.selectedPallet,"Settings")
+    Menu.objects[4] = Button.new(x,y + 3*yplus,Settings.selectedPallet,"Intro")
+    Menu.objects[5] = Button.new(x,y + 4*yplus,Settings.selectedPallet,"Sair")
     
-    local horizontalSprites = (Settings.windowSize.width/ (Settings.pixelwidth*Settings.spritelenght)) +1
-    local verticalSprites = (Settings.windowSize.height/ (Settings.pixelheight*Settings.spritelenght)) +1
-
-    for i = 0, horizontalSprites do
+    --create background
+    for i = 0, Settings:getHorizontalSprites() do
         self.background[#self.background+1] = {}
-        for j = 0, verticalSprites do
+        for j = 0, Settings:getVerticalSprites() do
             self.background[i+1][j+1] = Ground.new(Settings.pixelwidth*Settings.spritelenght*i,
             Settings.pixelheight*Settings.spritelenght*j, Settings.selectedPallet)
         end 
@@ -33,57 +35,28 @@ function Menu:load()
 end
 
 function Menu:update(dt)
-    Menu:checkFocus()
+    self:checkPallet()
+    self:checkFocus()
     if love.mouse.isDown(1) and self.objects[1].onFocus then
-        self:onClick(1)
+        self.nextScene = 4
+        self.switch = true
     end
     if love.mouse.isDown(1) and self.objects[2].onFocus then
-        self:onClick(2)
+        self.nextScene = 5
+        self.switch = true
     end
     if love.mouse.isDown(1) and self.objects[3].onFocus then
-        self:onClick(3)
+        self.nextScene = 3
+        self.switch = true
     end
     if love.mouse.isDown(1) and self.objects[4].onFocus then
-        self:onClick(4)
+        self.nextScene = 1
+        self.switch = true
     end
-    if love.keyboard.wasPressed("d") then
-        self:setPallet(DefaultPallet)
-    elseif love.keyboard.wasPressed("a") then
-        self:setPallet(RedPallet)
-    end
-end
-
-function Menu:draw()
-    for i = 1, #self.background do
-        for j = 1, #self.background[i] do
-            self.background[i][j]:draw()
-        end
-    end
-    for i = 1, #self.objects do
-        self.objects[i]:draw()
+    if love.mouse.isDown(1) and self.objects[5].onFocus then
+        Data:saveOnFile()
+        love.event.quit()
     end
 end
 
-function Menu:onClick(n)
-    Menu.objects[n]:setText("Clickou!")
-end
-
-function Menu:checkFocus()
-    for i = 1, #self.objects do
-        self.objects[i].onFocus = self.objects[i]:checkInside(love.mouse.getPosition())
-        self.objects[i]:setFocus(self.objects[i].onFocus)
-    end
-end
-
-function Menu:setPallet(pallet)
-    Settings.selectedPallet = pallet
-    for i = 1, #self.background do
-        for j = 1, #self.background[i] do
-            self.background[i][j]:setPallet(pallet)
-        end
-    end
-    for i = 1, #self.objects do
-        self.objects[i]:setPallet(pallet)
-    end
-end
 

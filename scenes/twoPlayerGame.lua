@@ -1,19 +1,21 @@
 --requires
-
---intro.lua
+require("objects.snakehead")
+require("scenes.genericScene")
+--twoPlayerGame.lua
 TwoPlayerGame = {
-    objects = {
-    },
-    nextScene = 2,
-    switch = false
-}
 
-function TwoPlayerGame:update(dt)
-    
+}
+setmetatable(TwoPlayerGame,MetaGenericScene)
+
+function TwoPlayerGame:load()
+    self.switch = false
+    Settings:setScale(12,7)
+    self.objects = {
+        SnakeHead.new(0,0,Settings.selectedPallet)
+    }
 end
 
-function TwoPlayerGame:draw()
-    for i = 1, #self.objects do
-        self.objects[i]:draw()
-    end
+function TwoPlayerGame:update(dt)
+    self:checkPallet()
+    self:checkFocus()
 end

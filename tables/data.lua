@@ -15,15 +15,15 @@ function Data:getSettings()
     return self.settings
 end
 
-function Data:saveOnFile(path)
+function Data:saveOnFile()
     local jsonStr = json.encode(self)
-    io.output(path)
+    io.output(Settings.savefile)
     io.write(jsonStr)
     io.close()
 end
 
-function Data:loadFromFile(path)
-    io.input(path)
+function Data:loadFromFile()
+    io.input(Settings.savefile)
     local savedData = io.read()
     local data = json.decode(savedData)
     self.record = data.record

@@ -28,7 +28,7 @@ function GenericObj:init(x,y,pallet)
 end
 
 function GenericObj:setSprite()
-    self.sprite = GenericSprite:new(self.path)
+    self.sprite = GenericSprite.new(self.path)
 end
 
 function GenericObj:draw()
