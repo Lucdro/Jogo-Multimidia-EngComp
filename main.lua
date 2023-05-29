@@ -1,8 +1,11 @@
 --[[
     Your love2d game start here
 ]]
+require("pallets.redPallet")
 require("tables.game")
 Game:recoverData()
+Game:setPallet(RedPallet)
+Game:setScene(2)
 love.graphics.setDefaultFilter('nearest', 'nearest')
 
 function love.load()

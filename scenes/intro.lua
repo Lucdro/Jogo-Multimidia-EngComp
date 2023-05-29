@@ -22,6 +22,10 @@ Intro = {
     switch = false
 }
 
+function Intro:load()
+    
+end
+
 function Intro:update(dt)
     --self.objects[1]:setDirection("down")
     self.objects[6]:setPallet(RedPallet)

@@ -6,7 +6,7 @@ require("tables.scenes")
 Game = {
     scenes = Scenes,
     data = Data,
-    currentScene = 2
+    currentScene = 0
 }
 
 function Game:recoverData()
@@ -29,8 +29,9 @@ end
 function Game:setScene(n)
     if self:sceneExists(n) then
         self.currentScene = n
-    else 
-        error("Scene don't exists!",1) end
+        self.scenes[self.currentScene]:setPallet(Settings.selectedPallet)
+        self.scenes[self.currentScene]:load()
+    end
 end
 function Game:update(dt)
     --if not self.loaded then return end
@@ -54,4 +55,8 @@ function Game:printError(e)
     love.graphics.setBackgroundColor(0,0,0)
     love.graphics.setColor(1,1,1)
     love.graphics.print(e)
+end
+
+function Game:setPallet(pallet)
+    Settings.selectedPallet = pallet
 end

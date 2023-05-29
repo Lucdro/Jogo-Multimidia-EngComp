@@ -9,6 +9,7 @@ GenericObj = {
     pallet = {},
     path = "",
     direction = "up",
+    onFocus = false,
 }
 MetaGenericObj = {
     __index = GenericObj
@@ -62,4 +63,10 @@ function GenericObj.GetDirection(ox,oy,x,y,olddirection)
    elseif oy < y then return "up"
    else return olddirection
    end
+end
+
+function GenericObj:checkInside(x,y)
+    if x == nil or y == nil then return end
+    return x >= self.x and x <= self.x+Settings.pixelwidth*Settings.spritelenght 
+    and y >= self.y and y <= self.y+Settings.pixelheight*Settings.spritelenght
 end

@@ -8,8 +8,7 @@ Data = {
 }
 
 function Data:setSettings(settings)
-    self.settings = settings
-    Settings.setWindowSize(self.settings.windowSize)
+    Settings:set(settings)
 end
 
 function Data:getSettings()
