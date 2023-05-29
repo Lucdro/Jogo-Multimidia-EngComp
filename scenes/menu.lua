@@ -18,20 +18,16 @@ function Menu:load()
     local x = (Settings.windowSize.width/2) - (Settings.pixelwidth * Settings.spritelenght)
     local yplus = (Settings.pixelheight * Settings.spritelenght * 1.25)
     local y = (Settings.windowSize.height - 5*yplus)/2
-    Menu.objects[1] = Button.new(x,y + 0*yplus,Settings.selectedPallet,"Single Player")
-    Menu.objects[2] = Button.new(x,y + 1*yplus,Settings.selectedPallet,"Two Players")
+    Menu.objects[1] = Button.new(x,y + 0*yplus,Settings.selectedPallet,"Single\nPlayer")
+    Menu.objects[1]:setTextPosition(9,0.7)
+    Menu.objects[2] = Button.new(x,y + 1*yplus,Settings.selectedPallet,"Two\nPlayers")
+    Menu.objects[2]:setTextPosition(8,0.7)
     Menu.objects[3] = Button.new(x,y + 2*yplus,Settings.selectedPallet,"Settings")
+    Menu.objects[3]:setTextPosition(6.5,3)
     Menu.objects[4] = Button.new(x,y + 3*yplus,Settings.selectedPallet,"Intro")
     Menu.objects[5] = Button.new(x,y + 4*yplus,Settings.selectedPallet,"Sair")
-    
-    --create background
-    for i = 0, Settings:getHorizontalSprites() do
-        self.background[#self.background+1] = {}
-        for j = 0, Settings:getVerticalSprites() do
-            self.background[i+1][j+1] = Ground.new(Settings.pixelwidth*Settings.spritelenght*i,
-            Settings.pixelheight*Settings.spritelenght*j, Settings.selectedPallet)
-        end 
-    end
+    self.backGroundSprite = Ground
+    self:createBackground()
 end
 
 function Menu:update(dt)

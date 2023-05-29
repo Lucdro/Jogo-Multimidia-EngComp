@@ -18,23 +18,26 @@ Settings = {
     minpixelwidth = 1,
     minpixelheight = 1,
     fontsize = 10,
-    savefile = "data.txt"
+    savefile = "data.txt",
+    fontFile = "/fonts/Pixeled.ttf",
+    font = {}
 }
 
 function Settings:defaultSettings()
-    Settings:setWindowSize({width = 1280, height =720})
+    self:setWindowSize({width = 1280, height =720})
     self.pixelheight = 5
     self.pixelwidth = 5
     self.selectedPallet = DefaultPallet
     self.currentPallet = 1
+    self.font = love.graphics.newFont(self.fontFile, self.fontsize)
 end
 
 function Settings:setWindowSize(windowsize)
     self.windowSize = {}
     self.windowSize.width = windowsize.width
     self.windowSize.height = windowsize.height
-    self:reScale()
     love.window.setMode(windowsize.width,windowsize.height)
+    self:reScale()
 end
 
 function Settings:setScale(x,y)
@@ -62,6 +65,9 @@ function Settings:set(settings)
     self.spritelenght = settings.spritelenght
     self.selectedPallet = settings.selectedPallet
     self.currentPallet = settings.currentPallet
+    self.fontsize = settings.fontsize
+    self.fontFile = settings.fontFile
+    self.font = settings.font
 end
 
 function Settings:getHorizontalSprites()
@@ -70,4 +76,25 @@ end
 
 function Settings:getVerticalSprites()
     return (self.windowSize.height/ (self.pixelheight*Settings.spritelenght)) +1
+end
+
+function Settings:setFont()
+    if self.font == nil then
+        self:changeFont(love.graphics.newFont(Settings.fontFile,Settings.fontsize))
+    end
+    self.font:setLineHeight(self.fontsize/40)
+    love.graphics.setFont(self.font)
+end
+
+function Settings:changeFont(font)
+    self.font = font
+    love.graphics.setFont(font)
+end
+
+function Settings:halfScreenVertical(spritecount)
+    return (self.windowSize.height / 2) - (self.pixelheight * (self.spritelenght / 2 * spritecount)) 
+end
+
+function Settings:halfScreenHorizontal(spritecount)
+    return (self.windowSize.width / 2) - (self.pixelwidth * (self.spritelenght / 2 * spritecount))
 end

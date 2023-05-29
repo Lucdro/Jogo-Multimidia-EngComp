@@ -8,6 +8,7 @@ GenericScene = {
     switch = false,
     focus = {},
     pallet = {},
+    backGroundSprite = {}
 }
 
 MetaGenericScene = {
@@ -69,5 +70,17 @@ end
 function GenericScene:checkPallet()
     if self.pallet ~= Settings.selectedPallet then
         self:setPallet(Settings.selectedPallet)
+    end
+end
+
+function  GenericScene:createBackground()
+    --create background
+    self.background = {}
+    for i = 0, Settings:getHorizontalSprites() do
+        self.background[#self.background+1] = {}
+        for j = 0, Settings:getVerticalSprites() do
+            self.background[i+1][j+1] = self.backGroundSprite.new(Settings.pixelwidth*Settings.spritelenght*i,
+            Settings.pixelheight*Settings.spritelenght*j, Settings.selectedPallet)
+        end 
     end
 end

@@ -7,11 +7,12 @@ require("tables.settings")
 Game:recoverData()
 Settings:setWindowSize({width = 1280, height = 720})
 Game:setScene(2)
-love.graphics.setDefaultFilter('nearest', 'nearest')
+love.graphics.setDefaultFilter("nearest","nearest")
 
 function love.load()
     -- init something here ...
     love.window.setTitle('Snoki')
+    Settings:setFont()
     love.keyboard.keysPressed = {}
 end
 

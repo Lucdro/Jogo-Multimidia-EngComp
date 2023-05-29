@@ -84,3 +84,4 @@ function Game:nextPallet()
     end
     self:setPallet(self.pallets[Settings.currentPallet])
 end
+
