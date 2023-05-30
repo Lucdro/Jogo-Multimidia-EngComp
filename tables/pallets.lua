@@ -1,14 +1,14 @@
 --requires
-require("pallets.defaultPallet")
+require("pallets.greenPallet")
 require("pallets.redPallet")
 require("pallets.violetPallet")
 require("pallets.blackWhitePallet")
 require("pallets.marioPallet")
 --pallets.lua
 Pallets = {
-    DefaultPallet,
+    BlackWhitePallet,
     RedPallet,
     VioletPallet,
-    BlackWhitePallet,
+    GreenPallet,
     MarioPallet,
 }

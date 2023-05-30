@@ -1,5 +1,5 @@
 --requires
-require("pallets.defaultPallet")
+require("pallets.blackWhitePallet")
 --settings.lua
 Settings = {
     windowSize ={
@@ -25,10 +25,9 @@ Settings = {
 
 function Settings:defaultSettings()
     self:setWindowSize({width = 1280, height =720})
-    self.pixelheight = 5
-    self.pixelwidth = 5
-    self.selectedPallet = DefaultPallet
+    self.selectedPallet = BlackWhitePallet
     self.currentPallet = 1
+    self.fontFile = "/fonts/Pixeled.ttf"
     self.font = love.graphics.newFont(self.fontFile, self.fontsize)
 end
 
@@ -55,7 +54,7 @@ function Settings:reScale()
     if self.pixelheight < self.minpixelheight then
         self.pixelheight = self.windowSize.height/(self.minSpritesy*self.spritelenght)
     end
-    self.fontsize = self.pixelwidth * 4
+    self.fontsize = self.pixelwidth * 4.5
 end
 
 function Settings:set(settings)
