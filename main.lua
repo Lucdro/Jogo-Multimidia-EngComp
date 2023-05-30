@@ -1,21 +1,19 @@
 --[[
     Your love2d game start here
 ]]
-require("pallets.redPallet")
 require("tables.game")
 require("tables.settings")
-love.window.setTitle('Snoki')
-local icon = love.image.newImageData("assets/apple.png")
-love.window.setIcon(icon)
-Game:recoverData()
---Settings:setWindowSize({width = 1280, height = 720})
-Game:setScene(2)
-love.graphics.setDefaultFilter("nearest","nearest")
 
 function love.load()
     -- init something here ...
-
+    love.window.setTitle('Snoki')
+    local icon = love.image.newImageData("assets/apple.png")
+    love.window.setIcon(icon)
+    love.graphics.setDefaultFilter("nearest","nearest")
+    Game:recoverData()
     Settings:setFont()
+    --Settings:setWindowSize({width = 1280, height = 720})
+    Game:setScene(2)
     love.keyboard.keysPressed = {}
 end
 

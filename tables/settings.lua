@@ -97,3 +97,11 @@ end
 function Settings:halfScreenHorizontal(spritecount)
     return (self.windowSize.width / 2) - (self.pixelwidth * (self.spritelenght / 2 * spritecount))
 end
+
+function Settings:getSpriteWidth()
+    return self.pixelwidth*self.spritelenght
+end
+
+function Settings:getSpriteHeight()
+    return self.pixelheight*self.spritelenght
+end
