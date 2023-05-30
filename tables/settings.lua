@@ -20,7 +20,8 @@ Settings = {
     fontsize = 10,
     savefile = "data.txt",
     fontFile = "/fonts/Pixeled.ttf",
-    font = {}
+    font = {},
+    title = 'Snoki'
 }
 
 function Settings:defaultSettings()

@@ -96,5 +96,6 @@ function Intro:moveSnake()
 end
 
 function Intro:draw()
+    love.graphics.print(Settings.title,Settings.windowSize.width/3.2,50,0,Settings.pixelwidth/4,Settings.pixelwidth/4)
     love.graphics.print("Space to skip",40,40,0,Settings.pixelwidth/10,Settings.pixelwidth/10)
 end

@@ -6,7 +6,7 @@ require("tables.settings")
 
 function love.load()
     -- init something here ...
-    love.window.setTitle('Snoki')
+    love.window.setTitle(Settings.title)
     local icon = love.image.newImageData("assets/apple.png")
     love.window.setIcon(icon)
     love.graphics.setDefaultFilter("nearest","nearest")
