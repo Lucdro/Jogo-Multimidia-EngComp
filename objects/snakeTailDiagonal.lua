@@ -1,11 +1,11 @@
 --requires
 require("objects.genericObj")
---snakeTail.lua
-SnakeTail = {
-    path = "sprites/snakeTail.txt"
+--snakeTailDiagonal.lua
+SnakeTailDiagonal = {
+    path = "sprites/snakeTailDiagonal.txt"
 }
 
-function SnakeTail.new(x,y,pallet)
+function SnakeTailDiagonal.new(x,y,pallet)
     local newObj = GenericObj.new(x,y,pallet)
     newObj:setPath(SnakeTail.path)
     return newObj

@@ -1,6 +1,6 @@
 --requires
 require("objects.genericObj")
---snakehead.lua
+--snakeTailEnd.lua
 SnakeTailEnd = {
     path = "sprites/snakeTailEnd.txt"
 }

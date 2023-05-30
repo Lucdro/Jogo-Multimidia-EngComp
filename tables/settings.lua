@@ -79,7 +79,7 @@ end
 
 function Settings:setFont()
     if self.font == nil then
-        self:changeFont(love.graphics.newFont(Settings.fontFile,Settings.fontsize))
+        self:changeFont(love.graphics.newFont(Settings.fontFile,self.fontsize))
     end
     self.font:setLineHeight(self.fontsize/40)
     love.graphics.setFont(self.font)

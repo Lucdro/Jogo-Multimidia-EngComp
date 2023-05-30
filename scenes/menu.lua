@@ -59,21 +59,21 @@ function Menu:createObjects()
     local yplus = (Settings.pixelheight * Settings.spritelenght * 1.25)
     local y = (Settings.windowSize.height - 5*yplus)/2
 
-    btnSinglePlayer = Button.new(x,y + 0*yplus,Settings.selectedPallet,"Single\nPlayer")
+    btnSinglePlayer = Button.new(x,y + 0*yplus,"Single\nPlayer")
     btnSinglePlayer:setTextPosition(9,0.4)
     table.insert(self.objects, btnSinglePlayer)
     
-    btnTwoPlayers = Button.new(x,y + 1*yplus,Settings.selectedPallet,"Two\nPlayers")
+    btnTwoPlayers = Button.new(x,y + 1*yplus,"Two\nPlayers")
     btnTwoPlayers:setTextPosition(8,0.4)
     table.insert(self.objects, btnTwoPlayers)
 
-    btnSettings = Button.new(x,y + 2*yplus,Settings.selectedPallet,"Settings")
+    btnSettings = Button.new(x,y + 2*yplus,"Settings")
     btnSettings:setTextPosition(6.5,3)
     table.insert(self.objects, btnSettings)
 
-    btnIntro = Button.new(x,y + 3*yplus,Settings.selectedPallet,"Intro")
+    btnIntro = Button.new(x,y + 3*yplus,"Intro")
     table.insert(self.objects, btnIntro)
 
-    btnLeave = Button.new(x,y + 4*yplus,Settings.selectedPallet,"Leave")
+    btnLeave = Button.new(x,y + 4*yplus,"Leave")
     table.insert(self.objects, btnLeave)
 end

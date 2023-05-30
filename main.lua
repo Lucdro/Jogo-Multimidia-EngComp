@@ -13,7 +13,7 @@ function love.load()
     Game:recoverData()
     Settings:setFont()
     --Settings:setWindowSize({width = 1280, height = 720})
-    Game:setScene(2)
+    Game:setScene(1)
     love.keyboard.keysPressed = {}
 end
 
@@ -22,7 +22,7 @@ function love.resize(w, h)
 end
 
 function love.keypressed(key)
-    if key == 'escape' then love.quit() end
+    --if key == 'escape' then love.quit() end
 
     love.keyboard.keysPressed[key] = true
 end

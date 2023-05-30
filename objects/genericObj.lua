@@ -1,5 +1,6 @@
 --requires
 require("objects.genericSprite")
+require("tables.settings")
 require("notMyCode.copytable")
 --genericObj.lua
 GenericObj = {
@@ -17,7 +18,7 @@ MetaGenericObj = {
 
 function GenericObj.new(x,y,pallet)
     local newObj = setmetatable({}, MetaGenericObj)
-    newObj:init(x,y,pallet)
+    newObj:init(x,y,pallet or Settings.selectedPallet)
     return newObj
 end
 

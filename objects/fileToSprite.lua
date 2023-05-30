@@ -17,7 +17,7 @@ function FileToSprite:Read(path)
 
     local pixels = {}
     local i = 1
-    for line in io.lines(path) do 
+    for line in io.lines(path) do
         pixels[#pixels + 1] = {}
         for j = 1 , #line do
             pixels[i][j] = tonumber(line:sub(j,j))

@@ -52,6 +52,7 @@ function Game:update(dt)
 end
 function Game:draw()
     if self.scenes[self.currentScene] ~= nil then
+        self.scenes[self.currentScene]:drawGeneric()
         self.scenes[self.currentScene]:draw()
     else
         self:printError("No scene selected! -- Draw ")

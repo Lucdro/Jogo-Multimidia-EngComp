@@ -20,7 +20,8 @@ MetaButton = {
     __index = Button
 }
 
-function Button.new(x,y,pallet,text)
+function Button.new(x,y,text,pallet)
+    pallet = pallet or Settings.selectedPallet
     local newButton = setmetatable({},MetaButton)
     newButton:setText(text)
     newButton:setPosition(x,y)

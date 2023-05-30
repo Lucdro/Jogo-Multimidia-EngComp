@@ -20,7 +20,7 @@ function GenericScene.new()
     return newScene
 end
 
-function GenericScene:draw()
+function GenericScene:drawGeneric()
     if #self.background ~= nil then
         for i = 1, #self.background do
             for j = 1, #self.background[i] do
@@ -83,4 +83,8 @@ function  GenericScene:createBackground()
             Settings.pixelheight*Settings.spritelenght*j, Settings.selectedPallet)
         end 
     end
+end
+
+function GenericScene:draw()
+    
 end
