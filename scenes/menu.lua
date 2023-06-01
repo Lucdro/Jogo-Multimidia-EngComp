@@ -2,6 +2,7 @@
 require("tables.data")
 require("objects.button")
 require("objects.ground")
+require("objects.wall")
 require("scenes.genericScene")
 --menu.lua
 Menu = {
@@ -17,10 +18,9 @@ local btnLeave = {}
 function Menu:load()
     self.switch = false
     Settings:setScale(12,7)
-    --Settings:setWindowSize({width = 640, height = 360})
     self:createObjects()
 
-    self.backGroundSprite = Ground
+    self.backGroundSprite = Wall
     self:createBackground()
 end
 
@@ -60,15 +60,12 @@ function Menu:createObjects()
     local y = (Settings.windowSize.height - 5*yplus)/2
 
     btnSinglePlayer = Button.new(x,y + 0*yplus,"Single\nPlayer")
-    btnSinglePlayer:setTextPosition(9,0.4)
     table.insert(self.objects, btnSinglePlayer)
     
     btnTwoPlayers = Button.new(x,y + 1*yplus,"Two\nPlayers")
-    btnTwoPlayers:setTextPosition(8,0.4)
     table.insert(self.objects, btnTwoPlayers)
 
     btnSettings = Button.new(x,y + 2*yplus,"Settings")
-    btnSettings:setTextPosition(6.5,3)
     table.insert(self.objects, btnSettings)
 
     btnIntro = Button.new(x,y + 3*yplus,"Intro")

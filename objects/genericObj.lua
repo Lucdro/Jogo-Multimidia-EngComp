@@ -71,3 +71,11 @@ function GenericObj:checkInside(x,y)
     return x >= self.x and x <= self.x+Settings.pixelwidth*Settings.spritelenght 
     and y >= self.y and y <= self.y+Settings.pixelheight*Settings.spritelenght
 end
+
+function GenericObj:invertVertical()
+    self.sprite:invertVertical()
+end
+
+function GenericObj:invertHorizontal()
+    self.sprite:invertHorizontal()
+end

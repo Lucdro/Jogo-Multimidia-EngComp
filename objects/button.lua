@@ -24,6 +24,7 @@ function Button.new(x,y,text,pallet)
     pallet = pallet or Settings.selectedPallet
     local newButton = setmetatable({},MetaButton)
     newButton:setText(text)
+    newButton:setTextPosition(5,1)
     newButton:setPosition(x,y)
     newButton.left = GenericObj.new(x,y,pallet)
     newButton.left:setPath(Button.path)
@@ -31,6 +32,7 @@ function Button.new(x,y,text,pallet)
     newButton.right = GenericObj.new(x+Settings.pixelwidth*Settings.spritelenght,y,pallet)
     newButton.right:setPath(Button.path)
     newButton.right:setDirection("left")
+    newButton.right:invertVertical()
     newButton:setPallet(pallet)
     
     return newButton
@@ -40,13 +42,13 @@ function Button:draw()
     self.left:draw()
     self.right:draw()
     love.graphics.setColor(self.pallet[4].red, self.pallet[4].green, self.pallet[4].blue, self.pallet[4].alpha)
-    love.graphics.print(self.text,self.x + Settings.pixelwidth*self.textx ,self.y + Settings.pixelheight*self.texty,0,
+    love.graphics.print(self.text,self.x + self.textx ,self.y + self.texty,0,
     Settings.pixelwidth/10,Settings.pixelwidth/10)
 end
 
 function Button:setTextPosition(x,y)
-    self.textx = x
-    self.texty = y
+    self.textx = Settings.pixelwidth * x
+    self.texty = Settings.pixelheight * y
 end
 
 function Button:setPosition(x,y)
@@ -75,11 +77,13 @@ function Button:checkInside(x,y)
 end
 
 function Button:setFocus(focus)
-    if focus then
+    if not focus and self.left.path ~= self.path then
         self.left:setPath(self.path)
         self.right:setPath(self.path)
-    else
+        self.right:invertVertical()
+    elseif focus and self.left.path ~= self.pathOnFocus then
         self.left:setPath(self.pathOnFocus)
         self.right:setPath(self.pathOnFocus)
+        self.right:invertVertical()
     end
 end

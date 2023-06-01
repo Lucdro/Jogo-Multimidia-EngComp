@@ -23,8 +23,8 @@ function GenericSprite:init(path)
 end
 
 function GenericSprite:draw(rx,ry,pallet,direction)
-    local pw = Game.data.settings.pixelwidth
-    local ph = Game.data.settings.pixelwidth
+    local pw = Settings.pixelwidth
+    local ph = Settings.pixelheight
     if direction == "left" then
         for i = 1, #self.pixels do
             for j = 1, #self.pixels[i] do
@@ -74,4 +74,26 @@ function GenericSprite:draw(rx,ry,pallet,direction)
             end
         end
     end
+end
+
+function GenericSprite:invertVertical()
+    local newpixels = {}
+    for i = 1, #self.pixels do
+        newpixels[i] = {}
+        for j = 1, #self.pixels[1] do
+            newpixels[i][j] = self.pixels[#self.pixels - (i-1)][j]
+        end
+    end
+    self.pixels = newpixels
+end
+
+function GenericSprite:invertHorizontal()
+    local newpixels = {}
+    for i = 1, #self.pixels do
+        newpixels[i] = {}
+        for j = 1, #self.pixels[1] do
+            newpixels[i][j] = self.pixels[i][#self.pixels[1] - (j-1)]
+        end
+    end
+    self.pixels = newpixels
 end

@@ -72,9 +72,9 @@ end
 
 function Intro:moveSnake()
     objSnakeHead:move(self.headposition,objSnakeHead.y)
-
+    
     if self.skip then self.skip = false goto addtail end
-    if objApple.x == self.headposition then
+    if objApple.x - self.headposition < 1 and self.headposition - objApple.x < 1 then
         self.skip = true
         objApple:move(-Settings:getSpriteWidth(),0)
     end

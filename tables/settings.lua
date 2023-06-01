@@ -1,5 +1,6 @@
 --requires
 require("pallets.blackWhitePallet")
+require("tables.pallets")
 --settings.lua
 Settings = {
     windowSize ={
@@ -11,10 +12,8 @@ Settings = {
     spritelenght = 16,
     selectedPallet = {},
     currentPallet = 1,
-    minSpritesx = 16,
-    maxSpritesx = 32,
-    minSpritesy = 10,
-    maxSpritesy = 20,
+    spritesx = 16,
+    spritesy = 9,
     minpixelwidth = 1,
     minpixelheight = 1,
     fontsize = 10,
@@ -25,11 +24,12 @@ Settings = {
 }
 
 function Settings:defaultSettings()
-    self:setWindowSize({width = 1280, height =720})
     self.selectedPallet = BlackWhitePallet
     self.currentPallet = 1
     self.fontFile = "/fonts/Pixeled.ttf"
     self.font = love.graphics.newFont(self.fontFile, self.fontsize)
+    self:setScale(16,9)
+    self:setWindowSize({width = 1280, height =720})
 end
 
 function Settings:setWindowSize(windowsize)
@@ -41,33 +41,32 @@ function Settings:setWindowSize(windowsize)
 end
 
 function Settings:setScale(x,y)
-    self.maxSpritesx = x
-    self.maxSpritesy = y
+    self.spritesx = x
+    self.spritesy = y
     self:reScale()
 end
 
 function Settings:reScale()
-    self.pixelwidth = self.windowSize.width/(self.maxSpritesx*self.spritelenght)
+    self.pixelwidth = self.windowSize.width/(self.spritesx*self.spritelenght)
     if self.pixelwidth < self.minpixelwidth then
-        self.pixelwidth = self.windowSize.width/(self.minSpritesx*self.spritelenght)
+        self.pixelwidth = self.minpixelwidth
     end
-    self.pixelheight = self.windowSize.height/(self.maxSpritesy*self.spritelenght)
+    self.pixelheight = self.windowSize.height/(self.spritesy*self.spritelenght)
     if self.pixelheight < self.minpixelheight then
-        self.pixelheight = self.windowSize.height/(self.minSpritesy*self.spritelenght)
+        self.pixelheight = self.minpixelheight
     end
-    self.fontsize = self.pixelwidth * 4.5
+    self.fontsize = 16 + ((self.pixelwidth/self.spritesx)+ (self.pixelheight/self.spritesy)*20)
+    self.font = nil
+    self:setFont()
 end
 
 function Settings:set(settings)
-    self:setWindowSize(settings.windowSize)
-    self.pixelwidth = settings.pixelwidth
-    self.pixelheight = settings.pixelheight
     self.spritelenght = settings.spritelenght
     self.selectedPallet = settings.selectedPallet
-    self.currentPallet = settings.currentPallet
-    self.fontsize = settings.fontsize
+    self.currentPallet = Pallets[self.selectedPallet]
     self.fontFile = settings.fontFile
     self.font = settings.font
+    self:setWindowSize(settings.windowSize)
 end
 
 function Settings:getHorizontalSprites()
@@ -82,7 +81,7 @@ function Settings:setFont()
     if self.font == nil then
         self:changeFont(love.graphics.newFont(Settings.fontFile,self.fontsize))
     end
-    self.font:setLineHeight(self.fontsize/40)
+    self.font:setLineHeight(0.15 + self.fontsize/(self.pixelheight*self.spritelenght))
     love.graphics.setFont(self.font)
 end
 
