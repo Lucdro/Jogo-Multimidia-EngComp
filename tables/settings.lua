@@ -4,8 +4,8 @@ require("tables.pallets")
 --settings.lua
 Settings = {
     windowSize ={
-        width = {},
-        height = {}
+        width = 0,
+        height = 0
     },
     pixelwidth = 5,
     pixelheight = 5,
@@ -28,8 +28,8 @@ function Settings:defaultSettings()
     self.currentPallet = 1
     self.fontFile = "/fonts/Pixeled.ttf"
     self.font = love.graphics.newFont(self.fontFile, self.fontsize)
-    self:setScale(16,9)
     self:setWindowSize({width = 1280, height =720})
+    self:setScale(16,9)
 end
 
 function Settings:setWindowSize(windowsize)
@@ -55,15 +55,15 @@ function Settings:reScale()
     if self.pixelheight < self.minpixelheight then
         self.pixelheight = self.minpixelheight
     end
-    self.fontsize = 16 + ((self.pixelwidth/self.spritesx)+ (self.pixelheight/self.spritesy)*20)
+    self.fontsize = 15 + ((self.pixelwidth/self.spritesx)+ (self.pixelheight/self.spritesy)*18)
     self.font = nil
     self:setFont()
 end
 
 function Settings:set(settings)
     self.spritelenght = settings.spritelenght
-    self.selectedPallet = settings.selectedPallet
-    self.currentPallet = Pallets[self.selectedPallet]
+    self.currentPallet = settings.currentPallet
+    self.selectedPallet = Pallets[self.currentPallet]
     self.fontFile = settings.fontFile
     self.font = settings.font
     self:setWindowSize(settings.windowSize)

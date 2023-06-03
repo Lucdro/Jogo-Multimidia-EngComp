@@ -20,11 +20,11 @@ MetaButton = {
     __index = Button
 }
 
-function Button.new(x,y,text,pallet)
+function Button.new(text,x,y,pallet)
     pallet = pallet or Settings.selectedPallet
     local newButton = setmetatable({},MetaButton)
     newButton:setText(text)
-    newButton:setTextPosition(5,1)
+    newButton:setTextPosition(5,0)
     newButton:setPosition(x,y)
     newButton.left = GenericObj.new(x,y,pallet)
     newButton.left:setPath(Button.path)

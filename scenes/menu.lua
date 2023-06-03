@@ -59,18 +59,18 @@ function Menu:createObjects()
     local yplus = (Settings.pixelheight * Settings.spritelenght * 1.25)
     local y = (Settings.windowSize.height - 5*yplus)/2
 
-    btnSinglePlayer = Button.new(x,y + 0*yplus,"Single\nPlayer")
+    btnSinglePlayer = Button.new("Single\nPlayer",x,y + 0*yplus)
     table.insert(self.objects, btnSinglePlayer)
     
-    btnTwoPlayers = Button.new(x,y + 1*yplus,"Two\nPlayers")
+    btnTwoPlayers = Button.new("Two\nPlayers",x,y + 1*yplus)
     table.insert(self.objects, btnTwoPlayers)
 
-    btnSettings = Button.new(x,y + 2*yplus,"Settings")
+    btnSettings = Button.new("Settings",x,y + 2*yplus)
     table.insert(self.objects, btnSettings)
 
-    btnIntro = Button.new(x,y + 3*yplus,"Intro")
+    btnIntro = Button.new("Intro",x,y + 3*yplus)
     table.insert(self.objects, btnIntro)
 
-    btnLeave = Button.new(x,y + 4*yplus,"Leave")
+    btnLeave = Button.new("Leave",x,y + 4*yplus)
     table.insert(self.objects, btnLeave)
 end

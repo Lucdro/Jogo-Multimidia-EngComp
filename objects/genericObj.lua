@@ -11,6 +11,7 @@ GenericObj = {
     path = "",
     direction = "up",
     onFocus = false,
+    visible = true,
 }
 MetaGenericObj = {
     __index = GenericObj
@@ -33,7 +34,8 @@ function GenericObj:setSprite()
 end
 
 function GenericObj:draw()
-    self.sprite:draw(self.x,self.y,self.pallet,self.direction)
+    if self.visible then
+    self.sprite:draw(self.x,self.y,self.pallet,self.direction) end
 end
 
 function GenericObj:setPallet(pallet)
@@ -67,9 +69,10 @@ function GenericObj.GetDirection(ox,oy,x,y,olddirection)
 end
 
 function GenericObj:checkInside(x,y)
-    if x == nil or y == nil then return end
-    return x >= self.x and x <= self.x+Settings.pixelwidth*Settings.spritelenght 
-    and y >= self.y and y <= self.y+Settings.pixelheight*Settings.spritelenght
+    if x == nil or y == nil then return false end
+    
+    return (x >= self.x and x <= self.x+Settings.pixelwidth*Settings.spritelenght
+    and y >= self.y and y <= self.y+Settings.pixelheight*Settings.spritelenght) and self.visible
 end
 
 function GenericObj:invertVertical()

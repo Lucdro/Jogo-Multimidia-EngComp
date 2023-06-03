@@ -18,4 +18,8 @@ end
 function MenuSettings:update(dt)
     self:checkPallet()
     self:checkFocus()
+    if love.keyboard.keysPressed['escape'] == true then 
+        self.newScene = 2
+        self.switch = true
+    end
 end

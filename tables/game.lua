@@ -2,6 +2,7 @@
 require("tables.data")
 require("tables.scenes")
 require("tables.pallets")
+require("tables.settings")
 --game.lua
 Game = {
     scenes = Scenes,

@@ -12,7 +12,7 @@ function love.load()
     love.graphics.setDefaultFilter("nearest","nearest")
     Game:recoverData()
     Settings:setFont()
-    Settings:setWindowSize({width = 640, height = 360})
+    Settings:setWindowSize({width = 1280, height = 720})
     Game:setScene(1)
     love.keyboard.keysPressed = {}
 end

@@ -7,7 +7,7 @@ SnakeTailDiagonal = {
 
 function SnakeTailDiagonal.new(x,y,pallet)
     local newObj = GenericObj.new(x,y,pallet)
-    newObj:setPath(SnakeTail.path)
+    newObj:setPath(SnakeTailDiagonal.path)
     return newObj
 end
 
