@@ -73,11 +73,11 @@ function Menu:createObjects()
     table.insert(self.objects, btnCredits)
 
     btnSettings = Button.new("Settings",x,y + 2*yplus)
-    table.insert(self.objects, btnSettings)
+    --table.insert(self.objects, btnSettings)
 
-    btnIntro = Button.new("Intro",x,y + 3*yplus)
+    btnIntro = Button.new("Intro",x,y + 2*yplus)
     table.insert(self.objects, btnIntro)
 
-    btnLeave = Button.new("Leave",x,y + 4*yplus)
+    btnLeave = Button.new("Leave",x,y + 3*yplus)
     table.insert(self.objects, btnLeave)
 end
