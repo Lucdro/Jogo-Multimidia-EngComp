@@ -25,10 +25,21 @@ SnakeGame = {
         apple = {},
         ground = {},
     },
-    appletime = 3,
+    sounds = {
+        pause = {},
+        retry = {},
+        applespawn = {},
+        appleeat = {},
+        win = {},
+        exit = {},
+        lose = {},
+    },
+    appletime = 2,
     appletimer = 0,
-    movetime = 0.7,
+    movetime = 0.3,
     movetimer = 0,
+    lose = false,
+    win = false,
 }
 setmetatable(SnakeGame,MetaGenericObj)
 MetaSnakeGame = {
@@ -51,6 +62,8 @@ function SnakeGame:init(x,y,lx,ly,pallet)
     self.objs.apple = Apple.new(0,0,pallet)
     self.objs.ground = Ground.new(0,0,pallet)
 
+    self:loadSounds()
+
     self.x = x
     self.y = y
     self.lx = lx
@@ -58,8 +71,29 @@ function SnakeGame:init(x,y,lx,ly,pallet)
     self:reset()
 end
 
+function SnakeGame:loadSounds()
+    self.sounds.pause = love.audio.newSource("sounds/smb_pause.wav","static")
+    self.sounds.pause:setPitch(0.8)
+    self.sounds.retry = love.audio.newSource("sounds/smb_kick.wav","static")
+    self.sounds.retry:setPitch(0.8)
+    self.sounds.applespawn = love.audio.newSource("sounds/smb_stomp.wav","static")
+    self.sounds.applespawn:setPitch(0.8)
+    self.sounds.appleeat = love.audio.newSource("sounds/smb_powerup.wav","static")
+    self.sounds.appleeat:setPitch(0.8)
+    self.sounds.win = love.audio.newSource("sounds/smb_world_clear.wav","static")
+    self.sounds.win:setPitch(0.8)
+    self.sounds.exit = love.audio.newSource("sounds/smb_kick.wav","static")
+    self.sounds.exit:setPitch(0.7)
+    self.sounds.lose = love.audio.newSource("sounds/91 Lakitu's Message.mp3","static")
+end
+
 function SnakeGame:reset()
-    self.pause = true
+    self.pause = false
+    self.lose = false
+    self.win = false
+    self.apple = false
+    if self.sounds.lose:isPlaying() then self.sounds.lose:stop() end
+    self.lastInput = "right"
     self:createMatrix()
     self:createSnake()
 end
@@ -85,7 +119,6 @@ end
 
 function SnakeGame:draw()
     self:drawMatrix()
-    if self.pause then love.graphics.print("Pausado",Settings.windowSize.width/4,Settings.windowSize.height/16,0,5,5) end
 end
 
 function SnakeGame:drawMatrix()
@@ -234,8 +267,30 @@ function SnakeGame:setPallet(pallet)
 end
 
 function SnakeGame:update(dt)
+    --Verify win
+    local snake = self:getSnake()
+    local matrixarea = #self.matrix * #self.matrix[1]
+    if #snake == matrixarea then
+        self.win = true
+        self.pause = true
+    end
+    --Retry
+    if love.keyboard.keysPressed['r'] == true then 
+        self:reset()
+        if not self.sounds.retry:isPlaying( ) then
+            love.audio.play(self.sounds.retry)
+        end
+    end
     --Pause
+    if love.keyboard.keysPressed['p'] == true or love.keyboard.keysPressed['space'] == true then
+        if self.lose then return end
+        self.pause = not(self.pause)
+        if not self.sounds.pause:isPlaying( ) then
+            love.audio.play(self.sounds.pause)
+        end
+    end
     if self.pause then return end
+    
     --MoveSnake
     if self.movetimer < 0 then
         self.movetimer = self.movetime
@@ -263,9 +318,11 @@ function SnakeGame:spawnApple()
             self.apple = true
         end
     end
+    love.audio.play(self.sounds.applespawn)
 end
 
-function SnakeGame:moveSnake()
+function SnakeGame:getNextPosition()
+    ::move::
     local nextPosition = {
         x = self.headposition.x,
         y = self.headposition.y
@@ -275,10 +332,24 @@ function SnakeGame:moveSnake()
     elseif self.lastInput == "up" then nextPosition.y = nextPosition.y - 1
     elseif self.lastInput == "down" then nextPosition.y = nextPosition.y + 1
     end
+    local snake = self:getSnake()
+    if snake[2].x == nextPosition.x and snake[2].y == nextPosition.y then
+        self.lastInput = self:invertDirection(self.lastInput)
+        goto move
+    end
+    return nextPosition
+end
+
+function SnakeGame:moveSnake()
+    local nextPosition = self:getNextPosition()
     if self:canMove(nextPosition) then
         --If not a apple remove tail
         if self.matrix[nextPosition.x][nextPosition.y] ~= 1 then self:removeTail()
-        else self.apple = false end
+        else 
+            self.apple = false
+            love.audio.play(self.sounds.appleeat)
+        end
+
         local direction = self:invertDirection(self.lastInput)
         
         self.matrix[nextPosition.x][nextPosition.y] = self:getNumbDirection(direction)
@@ -286,6 +357,8 @@ function SnakeGame:moveSnake()
         self.headposition.y = nextPosition.y
     else
         self.pause = true
+        self.lose = true
+        love.audio.play(self.sounds.lose)
     end
 end
 

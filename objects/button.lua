@@ -15,6 +15,7 @@ Button = {
     direction = "",
     textx = 8,
     texty = 3,
+    clickSound = {}
 }
 MetaButton = {
     __index = Button
@@ -34,7 +35,8 @@ function Button.new(text,x,y,pallet)
     newButton.right:setDirection("left")
     newButton.right:invertVertical()
     newButton:setPallet(pallet)
-    
+    newButton.clickSound = love.audio.newSource("sounds/smb_kick.wav","static")
+    newButton.clickSound:setPitch(0.9)
     return newButton
 end
 
@@ -85,5 +87,12 @@ function Button:setFocus(focus)
         self.left:setPath(self.pathOnFocus)
         self.right:setPath(self.pathOnFocus)
         self.right:invertVertical()
+    end
+end
+
+function Button:playSound()
+    if not self.clickSound:isPlaying( ) then
+        love.audio.play(self.clickSound)
+        love.audio.stop()
     end
 end

@@ -19,10 +19,13 @@ local objSnakeHead = {}
 local objApple = {}
 local objSnaketailEnd = {}
 local objSnaketail = {}
+local theme = {}
 function Intro:load()
     self.switch = false
     self.time = 0
     Settings:setScale(12,7)
+    theme = love.audio.newSource("sounds/04 Stage Clear.mp3","static")
+    if not theme:isPlaying() then love.audio.play(theme) end
     self.backGroundSprite = Wall
     self:createBackground()
     self:createObjects()

@@ -9,7 +9,14 @@ Game = {
     data = Data,
     currentScene = 0,
     pallets = Pallets,
+    palletsound = {}
 }
+
+function Game:load()
+    self:recoverData()
+    self.palletsound = love.audio.newSource("sounds/smb_kick.wav","static")
+    self.palletsound:setPitch(0.7)
+end
 
 function Game:recoverData()
     if FileExists(Settings.savefile) then
@@ -29,6 +36,7 @@ end
 
 function Game:setScene(n)
     if self:sceneExists(n) then
+        love.audio.stop()
         self.currentScene = n
         self.scenes[self.currentScene]:setPallet(Settings.selectedPallet)
         self.scenes[self.currentScene]:load()
@@ -70,6 +78,7 @@ function Game:setPallet(pallet)
 end
 
 function Game:previousPallet()
+    self:playPalletSound()
     if Settings.currentPallet == 1 then
         Settings.currentPallet = #self.pallets
     else
@@ -79,6 +88,7 @@ function Game:previousPallet()
 end
 
 function Game:nextPallet()
+    self:playPalletSound()
     if Settings.currentPallet == #self.pallets then
         Settings.currentPallet = 1
     else
@@ -87,3 +97,8 @@ function Game:nextPallet()
     self:setPallet(self.pallets[Settings.currentPallet])
 end
 
+function Game:playPalletSound()
+    if not self.palletsound:isPlaying( ) then
+        love.audio.play(self.palletsound)
+    end
+end
